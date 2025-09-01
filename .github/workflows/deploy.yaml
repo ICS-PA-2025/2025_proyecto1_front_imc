@@ -27,14 +27,14 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       # Construir y pushear imagen con logs detallados
-      - name: Build and push Docker image
+      - name: Build docker image and push GHCR
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/ICS-PA-2025/2025_proyecto1_front_imc:latest
-            ghcr.io/ICS-PA-2025/2025_proyecto1_front_imc:${{ github.sha }}
+            ghcr.io/ics-pa-2025/2025_proyecto1_front_imc:latest
+            ghcr.io/ics-pa-2025/2025_proyecto1_front_imc:${{ github.sha }}
           progress: plain
 
       # Listar imágenes locales para verificar
@@ -47,4 +47,4 @@ jobs:
         with:
           app-name: calculadora-imc-app
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: ghcr.io/ICS-PA-2025/2025_proyecto1_front_imc:latest
+          images: ghcr.io/ics-pa-2025/2025_proyecto1_front_imc:latest
