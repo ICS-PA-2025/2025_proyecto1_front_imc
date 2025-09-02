@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+
 interface ImcResult {
   imc: number;
   categoria: string;
@@ -11,6 +12,7 @@ function ImcForm() {
   const [peso, setPeso] = useState("");
   const [resultado, setResultado] = useState<ImcResult | null>(null);
   const [error, setError] = useState("");
+  const backendUrl = import.meta.env.VITE_DIRECCION_BACKEND;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,8 +27,9 @@ function ImcForm() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/imc/calcular", {
-        altura: alturaNum,
+
+        const response = await axios.post(`${backendUrl}/imc/calcular`, {
+            altura: alturaNum,
         peso: pesoNum,
       });
       setResultado(response.data);
