@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'https://calculadora-imc-backend-hzhme0ghaxcfbrd0.brazilsouth-01.azurewebsites.net';
+export const BACKEND_URL = 'http://localhost:3000';
