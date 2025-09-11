@@ -17,7 +17,7 @@ function Footer() {
                         <h5 className="mb-3">Enlaces útiles</h5>
                         <ul className="list-unstyled">
                             <li className="mb-2">
-                                <Link to="/" className="text-light text-decoration-none">
+                                <Link to="/home" className="text-light text-decoration-none">
                                     <i className="bi bi-calculator me-2"></i>
                                     Calculadora
                                 </Link>

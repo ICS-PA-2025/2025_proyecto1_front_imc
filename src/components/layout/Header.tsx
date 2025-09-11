@@ -31,7 +31,7 @@ function Header() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <Link className={isActive('/')} to="/">
+                            <Link className={isActive('/home')} to="/">
                                 <i className="bi bi-house-door me-1"></i>
                                 Inicio
                             </Link>
