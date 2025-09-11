@@ -1,6 +1,38 @@
 import {Link} from 'react-router-dom';
+import imcService from "../services/imcService.ts";
+import {useEffect, useState} from "react";
+import {ResponseImcHistoryDto} from "../dto/response-imc-history.dto.ts";
 
 function Historial() {
+    const [historial, setHistorial] = useState<ResponseImcHistoryDto[]>([]);
+    const [startDate, setStartDate] = useState<string>('');
+    const [endDate, setEndDate] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const fetchHistorial = async (filters?: { startDate?: string, endDate?: string }) => {
+        setLoading(true);
+        try {
+            const data = await imcService.obtenerHistorial(filters);
+            setHistorial(data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchHistorial();
+    }, []);
+
+    const handleFilter = (e: React.FormEvent) => {
+        e.preventDefault();
+        fetchHistorial({
+            startDate: startDate || undefined,
+            endDate: endDate || undefined,
+        });
+    };
+
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -15,63 +47,68 @@ function Historial() {
                             Nuevo Cálculo
                         </Link>
                     </div>
-
-                    <div className="card shadow-sm">
-                        <div className="card-body text-center py-5">
-                            <div className="mb-4">
-                                <i className="bi bi-clipboard-data display-1 text-muted"></i>
+                    <form className="mb-3" onSubmit={handleFilter}>
+                        <div className="row g-2 align-items-end">
+                            <div className="col-auto">
+                                <label className="form-label mb-0">Fecha inicio</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    value={startDate}
+                                    onChange={e => setStartDate(e.target.value)}
+                                />
                             </div>
-                            <h4 className="text-muted mb-3">No hay registros aún</h4>
-                            <p className="text-muted mb-4">
-                                Los cálculos de IMC que realices aparecerán aquí para que puedas
-                                hacer un seguimiento de tu progreso a lo largo del tiempo.
-                            </p>
-                            <Link to="/" className="btn btn-primary btn-lg">
-                                <i className="bi bi-calculator me-2"></i>
-                                Realizar primer cálculo
-                            </Link>
+                            <div className="col-auto">
+                                <label className="form-label mb-0">Fecha fin</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    value={endDate}
+                                    onChange={e => setEndDate(e.target.value)}
+                                />
+                            </div>
+                            <div className="col-auto">
+                                <button type="submit" className="btn btn-secondary">
+                                    Filtrar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-
-                    {/* Vista previa de cómo se vería con datos */}
+                    </form>
                     <div className="mt-4">
-                        <h5 className="text-muted">Vista previa del historial:</h5>
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="row align-items-center">
-                                    <div className="col-md-3">
-                                        <strong>25 Sep 2024</strong>
-                                        <br/>
-                                        <small className="text-muted">14:30</small>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <strong>1.75m</strong>
-                                        <br/>
-                                        <small className="text-muted">Altura</small>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <strong>70kg</strong>
-                                        <br/>
-                                        <small className="text-muted">Peso</small>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <strong className="text-success">22.86</strong>
-                                        <br/>
-                                        <small className="text-muted">IMC</small>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <span className="badge bg-success">Normal</span>
-                                    </div>
-                                    <div className="col-md-1">
-                                        <button className="btn btn-sm btn-outline-danger">
-                                            <i className="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <small className="text-muted">* Esta es solo una vista previa de cómo se mostrará el historial
-                            cuando tengas datos.</small>
+                        <table className="table table-striped mt-3">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Peso</th>
+                                <th>Altura</th>
+                                <th>IMC</th>
+                                <th>Categoría</th>
+                                <th>Fecha y Hora</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={7} className="text-center">Cargando...</td>
+                                </tr>
+                            ) : historial.length === 0 ? (
+                                <tr>
+                                    <td colSpan={7} className="text-center">No hay registros</td>
+                                </tr>
+                            ) : (
+                                historial.map(item => (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.peso}</td>
+                                        <td>{item.altura}</td>
+                                        <td>{item.imc}</td>
+                                        <td>{item.categoria}</td>
+                                        <td>{item.fechahora.toLocaleString()}</td>
+                                    </tr>
+                                ))
+                            )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

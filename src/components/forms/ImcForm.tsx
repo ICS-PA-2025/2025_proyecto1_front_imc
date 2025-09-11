@@ -1,12 +1,7 @@
-import axios from "axios";
 import React, {useState} from "react";
-import {BACKEND_URL} from "../../config/config.ts";
+import imcService from "../../services/imcService.ts";
+import {ImcResult} from "../../dto/imc-result.dto.ts";
 
-
-interface ImcResult {
-    imc: number;
-    categoria: string;
-}
 
 function ImcForm() {
     const [altura, setAltura] = useState("");
@@ -28,11 +23,12 @@ function ImcForm() {
 
         try {
 
-            const response = await axios.post(`${BACKEND_URL}/imc/calcular`, {
+            const response = await imcService.calcularImc({
                 altura: alturaNum,
                 peso: pesoNum,
             });
-            setResultado(response.data);
+
+            setResultado(response);
             setError("");
         } catch (err) {
             setError(
