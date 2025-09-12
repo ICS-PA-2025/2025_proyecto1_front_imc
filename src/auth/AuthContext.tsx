@@ -1,5 +1,6 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {authService} from "../services/authService";
+import {imcService} from "../services/imcService";
 
 type User = {
     id?: string;
@@ -23,12 +24,17 @@ export function AuthProvider({children}: { children: ReactNode }) {
     useEffect(() => {
         // Initialize user from localStorage on app start
         const storedUser = localStorage.getItem("user");
-        if (storedUser && authService.isAuthenticated()) {
+        const token = authService.getToken();
+
+        if (storedUser && authService.isAuthenticated() && token) {
             try {
                 setUser(JSON.parse(storedUser));
+                // Set token for imcService
+                imcService.setToken(token);
             } catch (error) {
                 console.error("Error parsing stored user:", error);
                 localStorage.removeItem("user");
+                authService.logout();
             }
         }
         setIsLoading(false);
@@ -40,6 +46,13 @@ export function AuthProvider({children}: { children: ReactNode }) {
             if (response.user) {
                 setUser(response.user);
                 localStorage.setItem("user", JSON.stringify(response.user));
+
+                // Set token for imcService
+                const token = authService.getToken();
+                if (token) {
+                    imcService.setToken(token);
+                }
+
                 return true;
             }
             return false;
@@ -55,6 +68,13 @@ export function AuthProvider({children}: { children: ReactNode }) {
             if (response.user) {
                 setUser(response.user);
                 localStorage.setItem("user", JSON.stringify(response.user));
+
+                // Set token for imcService
+                const token = authService.getToken();
+                if (token) {
+                    imcService.setToken(token);
+                }
+
                 return true;
             }
             return false;
@@ -67,6 +87,7 @@ export function AuthProvider({children}: { children: ReactNode }) {
 
     const logout = () => {
         authService.logout();
+        imcService.clearToken();
         setUser(null);
         localStorage.removeItem("user");
     };
