@@ -3,21 +3,12 @@ import "./ImcVisualForm.css";
 import imcService from "../../services/imcService";
 
 const imcCategories = [
-  { min: 0, max: 18, label: "Bajo peso", color: "#dbeafe" },
-  { min: 18, max: 25, label: "Peso normal", color: "#b4e197" },
-  { min: 25, max: 30, label: "Exceso de peso", color: "#ffe29a" },
-  { min: 30, max: 35, label: "Obesidad Grado I", color: "#ffc94a" },
-  { min: 35, max: 40, label: "Obesidad Grado II", color: "#ffa600" },
-  { min: 40, max: 45, label: "Obesidad Grado III", color: "#f44336" },
+  { min: 0, max: 18.5, label: "Bajo peso", color: "#dbeafe" },
+  { min: 18.5, max: 25, label: "Normal", color: "#b4e197" },
+  { min: 25, max: 30, label: "Sobrepeso", color: "#ffe29a" },
+  { min: 30, max: 45, label: "Obeso", color: "#f44336" },
 ];
 
-function getImcCategory(imc: number) {
-  for (const cat of imcCategories) {
-    if (imc >= cat.min && imc < cat.max) return cat;
-  }
-  if (imc >= 45) return { label: "Obesidad extrema", color: "#b71c1c" };
-  return { label: "No clasificado", color: "#ccc" };
-}
 
 const ImcVisualForm: React.FC = () => {
   const [altura, setAltura] = useState(0);
@@ -58,8 +49,8 @@ const ImcVisualForm: React.FC = () => {
           <input
             id="altura"
             type="number"
-            min="0"
-            max="3"
+            min="0.5"
+            max="2.5"
             step="0.01"
             value={altura || ""}
             onChange={e => setAltura(Number(e.target.value))}
@@ -71,8 +62,8 @@ const ImcVisualForm: React.FC = () => {
           <input
             id="peso"
             type="number"
-            min="0"
-            max="500"
+            min="10"
+            max="300"
             value={peso || ""}
             onChange={e => setPeso(Number(e.target.value))}
             placeholder="kg"
