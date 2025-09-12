@@ -1,0 +1,66 @@
+/* Estilos responsivos para el formulario IMC */
+.imc-form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.imc-form-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.imc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.imc-form label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.imc-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.imc-form button {
+  padding: 0.7rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.imc-form button:hover {
+  background: #0056b3;
+}
+
+.imc-result, .imc-error {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.imc-error {
+  color: #d32f2f;
+}
+
+@media (max-width: 600px) {
+  .imc-form-container {
+    padding: 1rem;
+    max-width: 95vw;
+  }
+  .imc-form input, .imc-form button {
+    font-size: 0.95rem;
+  }
+}
