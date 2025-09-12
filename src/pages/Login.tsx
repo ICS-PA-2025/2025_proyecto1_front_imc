@@ -11,35 +11,39 @@ function Login() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (login(email, password)) {
-            navigate("/dashboard");
+            navigate("/home");
         } else {
             alert("Credenciales inválidas");
         }
     };
 
     return (
-        <div className="container">
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Correo"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="form-control mb-2"
-                />
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="form-control mb-2"
-                />
-                <button className="btn btn-primary w-100" type="submit">
-                    Ingresar
-                </button>
-            </form>
-        </div>
+            <div className="container">
+                <h1>Login</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                            type="email"
+                            placeholder="Correo"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="form-control mb-2"
+                    />
+                    <input
+                            type="password"
+                            placeholder="Contraseña"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="form-control mb-2"
+                    />
+                    <button className="btn btn-primary w-100" type="submit">
+                        Ingresar
+                    </button>
+                </form>
+
+                <p className="mt-3">
+                    ¿No tienes una cuenta? <a href="/register">Regístrate</a>
+                </p>
+            </div>
     );
 }
 

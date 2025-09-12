@@ -60,7 +60,8 @@ export function AuthProvider({children}: { children: ReactNode }) {
             return false;
         } catch (error) {
             console.error("Register error:", error);
-            return false;
+            // Re-throw the error so it can be caught by the Register component
+            throw error;
         }
     };
 
@@ -71,9 +72,9 @@ export function AuthProvider({children}: { children: ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{user, login, register, logout, isLoading}}>
-            {children}
-        </AuthContext.Provider>
+            <AuthContext.Provider value={{user, login, register, logout, isLoading}}>
+                {children}
+            </AuthContext.Provider>
     );
 }
 

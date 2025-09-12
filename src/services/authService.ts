@@ -73,6 +73,10 @@ class AuthService {
             if (axios.isAxiosError(error)) {
                 if (error.response?.data) {
                     const apiError: ApiError = error.response.data;
+                    // Handle validation error messages array
+                    if (Array.isArray(apiError.message)) {
+                        throw new Error(apiError.message.join(', '));
+                    }
                     throw new Error(apiError.message || 'Register failed');
                 }
                 if (error.code === 'ECONNREFUSED') {
