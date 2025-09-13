@@ -1,4 +1,3 @@
-import ImcForm from "../components/forms/ImcForm.tsx";
 import ImcVisualForm from "../components/forms/ImcVisualForm";
 
 const Home: React.FC = () => {
@@ -11,10 +10,11 @@ const Home: React.FC = () => {
                             Calcula tu Índice de Masa Corporal (IMC)
                         </h1>
                         <p className="lead text-muted">
-                            Tu IMC puede ser una medida inicial útil para identificar tu clasificación de peso y tus factores de riesgo de obesidad.
+                            Tu IMC puede ser una medida inicial útil para identificar tu clasificación de peso y tus
+                            factores de riesgo de obesidad.
                         </p>
                     </div>
-                    <ImcVisualForm />
+                    <ImcVisualForm/>
                 </div>
             </div>
         </div>
