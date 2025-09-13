@@ -4,7 +4,7 @@ import {ApiError} from "../dto/api-error.ts";
 import {AuthResponse} from "../dto/auth/auth-response.dto.ts";
 
 const authApi = axios.create({
-    baseURL: AUTH_API_URL,
+    baseURL: AUTH_API_URL + "/auth",
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

@@ -13,14 +13,16 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
-
-                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/home" element={
+                        <PrivateRoute>
+                            <Home/>
+                        </PrivateRoute>
+                    }/>
                     <Route path="/historial" element={
                         <PrivateRoute>
                             <Historial/>
                         </PrivateRoute>
                     }/>
-
                     <Route path="*" element={<Login/>}/>
                 </Routes>
             </Layout>
