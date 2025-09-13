@@ -16,11 +16,24 @@ const imcApi = axios.create({
     },
 });
 
+// Attach token from localStorage on start (if exists)
+const initialToken = localStorage.getItem('token');
+if (initialToken) {
+    imcApi.defaults.headers.common['Authorization'] = `Bearer ${initialToken}`;
+}
+
 // Interceptor para manejo de errores global
 imcApi.interceptors.response.use(
     (response) => response,
     (error) => {
         console.error('Error en la API:', error);
+        // Handle 401 Unauthorized errors
+        if (error.response?.status === 401) {
+            // Token expired or invalid, redirect to login
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        }
         return Promise.reject(error);
     }
 );
@@ -89,6 +102,20 @@ class ImcService {
             }
             throw new Error('Error inesperado al obtener el historial');
         }
+    }
+
+    /**
+     * Set the authorization token for API requests
+     */
+    setToken(token: string) {
+        imcApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    /**
+     * Clear the authorization token
+     */
+    clearToken() {
+        delete imcApi.defaults.headers.common['Authorization'];
     }
 }
 

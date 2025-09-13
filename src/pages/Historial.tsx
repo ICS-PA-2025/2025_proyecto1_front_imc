@@ -42,7 +42,7 @@ function Historial() {
                             <i className="bi bi-clock-history me-2"></i>
                             Historial de Cálculos
                         </h1>
-                        <Link to="/" className="btn btn-primary">
+                        <Link to="/home" className="btn btn-primary">
                             <i className="bi bi-plus-circle me-2"></i>
                             Nuevo Cálculo
                         </Link>

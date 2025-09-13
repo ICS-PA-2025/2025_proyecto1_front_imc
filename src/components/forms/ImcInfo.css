@@ -1,0 +1,48 @@
+.imc-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 350px;
+}
+
+.imc-info h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.imc-info table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.imc-info th, .imc-info td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.imc-info th {
+  background: #e9ecef;
+}
+
+@media (min-width: 800px) {
+  .imc-form-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .imc-form-container {
+    flex: 1;
+    min-width: 300px;
+  }
+  .imc-info {
+    flex: 1;
+    min-width: 250px;
+    margin: 0;
+  }
+}

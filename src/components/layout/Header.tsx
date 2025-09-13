@@ -1,7 +1,9 @@
 import {Link, useLocation} from 'react-router-dom';
+import {useAuth} from '../../auth/AuthContext';
 
 function Header() {
     const location = useLocation();
+    const {user, logout} = useAuth();
 
     // Función para determinar si una ruta está activa
     const isActive = (path: string) => {
@@ -31,7 +33,7 @@ function Header() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <Link className={isActive('/')} to="/">
+                            <Link className={isActive('/home')} to="/home">
                                 <i className="bi bi-house-door me-1"></i>
                                 Inicio
                             </Link>
@@ -42,6 +44,25 @@ function Header() {
                                 Historial
                             </Link>
                         </li>
+                        {user && (
+                            <>
+                                <li className="nav-item">
+                                    <span className="navbar-text text-white me-3">
+                                        <i className="bi bi-person-circle me-1"></i>
+                                        {user.email}
+                                    </span>
+                                </li>
+                                <li className="nav-item">
+                                    <button
+                                        className="btn btn-outline-light btn-sm"
+                                        onClick={logout}
+                                    >
+                                        <i className="bi bi-box-arrow-right me-1"></i>
+                                        Cerrar Sesión
+                                    </button>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
