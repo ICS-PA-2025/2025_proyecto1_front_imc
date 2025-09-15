@@ -50,7 +50,7 @@ const ImcVisualForm: React.FC = () => {
             id="altura"
             type="number"
             min="0.5"
-            max="2.5"
+            max="3.0"
             step="0.01"
             value={altura || ""}
             onChange={e => setAltura(Number(e.target.value))}
@@ -63,7 +63,8 @@ const ImcVisualForm: React.FC = () => {
             id="peso"
             type="number"
             min="10"
-            max="300"
+            max="500"
+            step="0.01"
             value={peso || ""}
             onChange={e => setPeso(Number(e.target.value))}
             placeholder="kg"
