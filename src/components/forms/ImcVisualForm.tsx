@@ -64,6 +64,7 @@ const ImcVisualForm: React.FC = () => {
             type="number"
             min="10"
             max="500"
+            step="0.01"
             value={peso || ""}
             onChange={e => setPeso(Number(e.target.value))}
             placeholder="kg"
