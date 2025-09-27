@@ -5,6 +5,7 @@ import Historial from './pages/Historial'
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
 import PrivateRoute from "./auth/PrivateRoute.tsx";
+import Estadisticas from './pages/Estadisticas.tsx';
 
 function App() {
     return (
@@ -21,6 +22,11 @@ function App() {
                     <Route path="/historial" element={
                         <PrivateRoute>
                             <Historial/>
+                        </PrivateRoute>
+                    }/>
+                    <Route path="/estadisticas" element={
+                        <PrivateRoute>
+                            <Estadisticas/>
                         </PrivateRoute>
                     }/>
                     <Route path="*" element={<Login/>}/>

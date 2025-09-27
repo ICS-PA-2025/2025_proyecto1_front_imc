@@ -44,6 +44,12 @@ function Header() {
                                 Historial
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className={isActive('/estadisticas')} to="/estadisticas">
+                                <i className="bi bi-bar-chart me-1"></i>
+                                Estadísticas
+                            </Link>
+                        </li>
                         {user && (
                             <>
                                 <li className="nav-item">
