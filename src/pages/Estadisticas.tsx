@@ -1,9 +1,18 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import imcService from "../services/imcService.ts";
-import { useEffect, useState } from "react";
-import { ResponseImcHistoryDto } from "../dto/response-imc-history.dto.ts";
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import {useEffect, useState} from "react";
+import {ResponseImcHistoryDto} from "../dto/response-imc-history.dto.ts";
+import {Line} from 'react-chartjs-2';
+import {
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip
+} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -116,16 +125,20 @@ function Estadisticas() {
                         <div className="alert alert-info">No hay datos para graficar.</div>
                     ) : (
                         <div className="mt-4">
-                            <Line data={data} />
+                            <Line data={data}/>
                         </div>
                     )}
                     <div className="mt-4">
                         <ul>
                             <li>Total de mediciones: {totalMediciones}</li>
-                            <li>Promedio de peso: {promedioPeso.toFixed(2)}</li>
-                            <li>Promedio de IMC: {promedioImc.toFixed(2)}</li>
-                            <li>Variacion de peso: {variacionPeso.toFixed(2)}</li>
-                            <li>Variacion de IMC: {variacionImc.toFixed(2)}</li>
+                            <li>Promedio de
+                                peso: {(promedioPeso != null && !isNaN(promedioPeso)) ? promedioPeso.toFixed(2) : '0.00'}</li>
+                            <li>Promedio de
+                                IMC: {(promedioImc != null && !isNaN(promedioImc)) ? promedioImc.toFixed(2) : '0.00'}</li>
+                            <li>Variacion de
+                                peso: {(variacionPeso != null && !isNaN(variacionPeso)) ? variacionPeso.toFixed(2) : '0.00'}</li>
+                            <li>Variacion de
+                                IMC: {(variacionImc != null && !isNaN(variacionImc)) ? variacionImc.toFixed(2) : '0.00'}</li>
                         </ul>
                     </div>
                 </div>
