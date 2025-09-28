@@ -1,10 +1,11 @@
-import axios, {AxiosResponse} from 'axios';
-import {BACKEND_URL} from '../config/config';
-import {ApiError} from "../dto/api-error.ts";
-import {CalcularImcDto} from "../dto/calcular-imc.dto.ts";
-import {ResponseImcDto} from "../dto/response-imc.dto.ts";
-import {ImcHistoryFilters} from "../dto/imd-history-filters.dto.ts";
-import {ResponseImcHistoryDto} from "../dto/response-imc-history.dto.ts";
+import axios, { AxiosResponse } from 'axios';
+import { BACKEND_URL } from '../config/config';
+import { ApiError } from "../dto/api-error.ts";
+import { CalcularImcDto } from "../dto/calcular-imc.dto.ts";
+import { ResponseImcDto } from "../dto/response-imc.dto.ts";
+import { ImcHistoryFilters } from "../dto/imd-history-filters.dto.ts";
+import { ResponseImcHistoryDto } from "../dto/response-imc-history.dto.ts";
+import { ImcListWithStats } from '../dto/response-imc-stats.dto.ts';
 
 
 // Configuración base de axios para el servicio IMC
@@ -101,6 +102,25 @@ class ImcService {
                 }
             }
             throw new Error('Error inesperado al obtener el historial');
+        }
+    }
+
+    async obtenerHistorialConStats(filters?: ImcHistoryFilters): Promise<ImcListWithStats> {
+        try {
+            const params = new URLSearchParams();
+            if (filters?.startDate) params.append('startDate', filters.startDate);
+            if (filters?.endDate) params.append('endDate', filters.endDate);
+
+            const response: AxiosResponse<ImcListWithStats> = await imcApi.get('/stats', {
+                params: Object.fromEntries(params)
+            });
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response?.data) {
+                const apiError: ApiError = error.response.data;
+                throw new Error(apiError.message || 'Error al obtener historial y estadísticas');
+            }
+            throw new Error('Error inesperado al obtener historial y estadísticas');
         }
     }
 
