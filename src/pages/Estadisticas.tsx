@@ -9,6 +9,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 function Estadisticas() {
     const [historial, setHistorial] = useState<ResponseImcHistoryDto[]>([]);
+    const [totalMediciones, setTotalMediciones] = useState<number>(0);
+    const [promedioPeso, setPromedioPeso] = useState<number>(0);
+    const [promedioImc, setPromedioImc] = useState<number>(0);
+    const [variacionPeso, setVariacionPeso] = useState<number>(0);
+    const [variacionImc, setVariacionImc] = useState<number>(0);
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -16,8 +21,13 @@ function Estadisticas() {
     const fetchHistorial = async (filters?: { startDate?: string, endDate?: string }) => {
         setLoading(true);
         try {
-            const data = await imcService.obtenerHistorial(filters);
-            setHistorial(data);
+            const data = await imcService.obtenerHistorialConStats(filters);
+            setHistorial(data.items);
+            setTotalMediciones(data.stats.total);
+            setPromedioPeso(data.stats.promedioPeso);
+            setPromedioImc(data.stats.promedioImc);
+            setVariacionPeso(data.stats.variacionPeso);
+            setVariacionImc(data.stats.variacionImc);
         } catch (error) {
             console.log(error);
         } finally {
@@ -58,8 +68,6 @@ function Estadisticas() {
             },
         ],
     };
-
-    const totalMediciones = historial.length;
 
     return (
         <div className="container">
@@ -114,6 +122,10 @@ function Estadisticas() {
                     <div className="mt-4">
                         <ul>
                             <li>Total de mediciones: {totalMediciones}</li>
+                            <li>Promedio de peso: {promedioPeso.toFixed(2)}</li>
+                            <li>Promedio de IMC: {promedioImc.toFixed(2)}</li>
+                            <li>Variacion de peso: {variacionPeso.toFixed(2)}</li>
+                            <li>Variacion de IMC: {variacionImc.toFixed(2)}</li>
                         </ul>
                     </div>
                 </div>
