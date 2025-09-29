@@ -1,31 +1,37 @@
 # Etapa 1: Construcción
 FROM node:18 AS build-stage
 
-# Establecer directorio de trabajo
+# Directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de dependencias
+# Copiar dependencias
 COPY package*.json ./
 
 # Instalar dependencias
 RUN npm install
 
-# Copiar el resto del código fuente
+# Copiar todo el código fuente
 COPY . .
 
-# Construir la aplicación con Vite
+# Inyectar variables de entorno para Vite (build-time)
+ARG VITE_BACKEND_URL
+ARG VITE_AUTH_API_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+ENV VITE_AUTH_API_URL=$VITE_AUTH_API_URL
+
+# Construir la app
 RUN npm run build
 
-# Etapa 2: Servir el contenido con Nginx
+# Etapa 2: Servir con Nginx
 FROM nginx:alpine AS production-stage
 
-# Copiar configuración personalizada de Nginx (opcional, útil si usas rutas en React Router)
+# Copiar configuración de Nginx (opcional)
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Copiar el build generado al servidor Nginx
+# Copiar build de Vite al servidor Nginx
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Exponer el puerto 80
+# Exponer puerto 80
 EXPOSE 80
 
 # Comando de inicio
